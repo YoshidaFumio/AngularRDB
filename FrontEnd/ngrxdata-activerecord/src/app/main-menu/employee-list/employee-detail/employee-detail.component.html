@@ -1,0 +1,95 @@
+<ng-container *ngIf = "branch$ | async as branches">
+    <app-bridge [inputdata]=branches (outputEvent)="getBranch($event)"></app-bridge>
+    <ng-container *ngIf = "organization$ | async as organizations">
+        <app-bridge [inputdata]=organizations (outputEvent)="getOrganization($event)"></app-bridge>
+        <ng-container *ngIf = "position$ | async as positions">
+            <app-bridge [inputdata]=positions (outputEvent)="getPosition($event)"></app-bridge>
+            <ng-container *ngIf = "employee$ | async as employees">
+                <app-bridge [inputdata]=employees (outputEvent)="getCurrent($event)"></app-bridge>
+                <mat-toolbar color="primary">
+                    <span class = "toolbar-top">従業員詳細編集　（事業所別）</span>
+                </mat-toolbar>
+                <div class="outline">
+                    <form [formGroup]="employeeForm">
+                        <!-- code -->
+                        <mat-form-field>
+                            <input matInput placeholder="姓" formControlName="last_name" >
+                            <!-- mat-error *ngIf="last_name.hasERROR('required')">
+                                Family Name is required
+                            </mat-error -->
+                        </mat-form-field>
+                        <!-- Name -->
+                        <mat-form-field>
+                            <input matInput placeholder="名" formControlName="first_name">
+                            <!-- mat-error *ngIf="first_name.hasERROR('required')">
+                                    First Name is required
+                            </mat-erro -->
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="携帯番号" formControlName="mobile_number">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Eメール" formControlName="mail_address">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="Twitter" formControlName="twitter_link">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="誕生日" formControlName="birthday">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="入社日" formControlName="entering_company">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput placeholder="英語テスト"  formControlName="english_test">
+                        </mat-form-field>
+                        <div>
+                            <span>現在の事業所：</span>
+                            <span> {{ dspBranch(curEmployee.branch_id) }}</span>
+                        </div>
+                        <mat-form-field>
+                            <!-- input matInput placeholder="事業所"  formControlName="branch_id"-->
+                            <mat-label>事業所の変更</mat-label>
+                            <mat-select formControlName="branch_id">
+                                <mat-option *ngFor="let branch of branches" (value)="branch.id">
+                                    {{branch.branch_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div>
+                            <span>現在の部門：</span>
+                            <span> {{ dspOrganization(curEmployee.organization_id) }}</span>
+                        </div>    
+                        <mat-form-field>
+                            <!-- input matInput placeholder="部門"  formControlName="organization_id" -->
+                            <mat-label>部門の変更</mat-label>
+                            <mat-select formControlName="organization_id">
+                                <mat-option *ngFor="let organization of organizations" (value)="organization.id">
+                                    {{organization.org_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div>
+                            <span>現在の役職：</span>
+                            <span> {{ dspPosition(curEmployee.position_id) }}</span>
+                        </div>    
+                        <mat-form-field>
+                            <!-- input matInput placeholder="役職"  formControlName="position_id" -->
+                            <mat-label>役職の変更</mat-label>
+                            <mat-select formControlName="position_id">
+                                <mat-option *ngFor="let position of positions" (value)="position.id" >
+                                    {{position.pos_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </form>
+                　　 <div class="button-row">
+                        <button mat-raised-button (click)="onCancel()" class="button-m">キャンセル</button>
+                        <button mat-raised-button (click)="onSave()"  class="button-m">保存</button>
+                        <button mat-raised-button (click)="onDelete()"  class="button-m">削除</button>
+                    </div>       
+    　　　       </div>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+</ng-container>   

@@ -1,0 +1,21 @@
+
+.mid-title {
+    margin: 0 auto ;
+}
+
+.button-style {
+    width: 55% ;
+    margin-left:auto ;
+    height:10% ;
+    color:blue ;
+    background-color:yellow ;
+    font-size: x-large ;
+}
+.menu-item
+{
+    margin: 0 auto ;
+}
+.selectview{
+    margin: 0 auto ;
+    width: 300px ;
+}

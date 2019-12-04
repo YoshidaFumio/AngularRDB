@@ -1,0 +1,39 @@
+<ng-container *ngIf = "branch$ | async as branchees">
+    <ng-container *ngIf = "position$ | async as positions">
+        <ng-container *ngIf = "organization$ | async as organizations">
+            <ng-container *ngIf = "calculation$ | async as calculations">
+                <ng-container *ngIf = "employee$ | async as employees">
+                    <app-bridge [inputdata]=organizations (outputEvent)="getCurrent($event)"></app-bridge>
+                    <mat-toolbar color="primary">
+                        <span class = "toolbar-top">従業員一覧 （事業所別）</span>
+                    </mat-toolbar>
+                    <div class="message-t">
+                        英語の平均点数　{{ calculations[0]?.value }}
+                    </div>
+                    <div class="message-t">
+                            クリックすると詳細を表示して編集ができます。
+                    </div>
+                    <div class="outline">
+                        <div>
+                            <span class="header-pos1">姓</span>
+                            <span class="header-pos2">名</span>
+                            <span class="header-pos3">部門</span>
+                        </div>            
+                        <mat-nav-list>
+                            <mat-list-item *ngFor="let employee of employees" 
+                                (click)="onSelect(employee.id)">
+                                    <span class="item-pos1">{{ employee.last_name }}</span>
+                                    <span class="item-pos2"> {{ employee.first_name }}</span>
+                                    <span class="item-pos3">{{ dspOrganization(employee.organization_id)}}</span>
+                            </mat-list-item>  
+                        </mat-nav-list>
+                        <div class="button-row">
+                            <button mat-raised-button (click)="onCancel()" class="button-m">キャンセル</button>
+                            <button mat-raised-button (click)="onNew()" class="button-m">新規</button>
+                        </div>       
+                    </div>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </ng-container>        
+</ng-container>

@@ -1,0 +1,40 @@
+<ng-container *ngIf = "branch$ | async as branches; else loadingOnErrorBranch">
+    <ng-container *ngIf = "organization$ | async as organizations; else loadingOnErrorOrganization">
+        <ng-container *ngIf = "position$ | async as positions; else loadingOnErrorPosition">
+            <mat-toolbar color="primary">
+                <span class="mid-title">Angular RDB access sample</span>
+            </mat-toolbar>
+            <mat-nav-list>
+                <mat-list-item (click)="onBranch()">
+                    <div class="menu-item">事業所一覧</div>
+                </mat-list-item>
+                <mat-list-item (click)="onOrganization()">
+                    <div class="menu-item">部門一覧</div>
+                </mat-list-item>
+                <mat-list-item (click)="onPosition()">
+                    <div class="menu-item">役職一覧</div>
+                </mat-list-item>
+                <mat-list-item (click)="onEmployee()">
+                    <div class="menu-item">従業員一覧　事業所別 (非join)</div>
+                </mat-list-item>
+                <mat-list-item (click)="onOrganizationJoin()">
+                    <div class="menu-item">従業員一覧　部門別　(join)</div>
+                </mat-list-item>
+                <mat-list-item (click)="onTransactionTest()">
+                    <div class="menu-item">トランザクションテスト</div>
+                </mat-list-item>
+            </mat-nav-list>
+    </ng-container>
+        <ng-template #loadingOnErrorPosition>
+            Position Table Loading Error !! Please reset Web Page
+        </ng-template>                                       
+    </ng-container>
+    <ng-template #loadingOnErrorOrganization>
+        Organization Table Loading Error !! Please reset Web Page
+    </ng-template>               
+</ng-container>
+<ng-template #loadingOnErrorBranch>
+    Branch Table Loading Error !! Please reset Web Page
+</ng-template>
+
+

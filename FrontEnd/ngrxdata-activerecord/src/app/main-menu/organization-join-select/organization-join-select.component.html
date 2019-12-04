@@ -1,0 +1,24 @@
+<ng-container *ngIf = "organization$ | async as organizations">
+    <mat-toolbar color="primary">
+        <span class = "toolbar-top">従業員一覧　部門の選択</span>
+    </mat-toolbar>
+    <div class="message-t">
+        クリックすると該当部門の従業員が表示されます。
+    </div>
+    <div class="outline">
+        <div>
+            <span class="header-pos1">コード</span>
+            <span class="header-pos2">名前</span>
+        </div>             
+        <mat-nav-list>
+            <mat-list-item *ngFor="let organization of organizations" 
+                (click)="onSelect(organization.id)">
+                    <span>{{ organization.org_code }}</span>
+                    <span class="item-pos">{{ organization.org_name }}</span>
+            </mat-list-item>  
+        </mat-nav-list>
+        <div class="button-row">
+            <button mat-raised-button (click)="onCancel()" class="button-m">キャンセル</button>
+        </div>       
+    </div>
+</ng-container>

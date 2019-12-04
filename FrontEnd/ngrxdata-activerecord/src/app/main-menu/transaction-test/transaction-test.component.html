@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+    <span class = "toolbar-top">トランザクションテスト</span>
+</mat-toolbar>
+
+<div class="outline">
+    <form  [formGroup]="transactionForm">
+        <mat-form-field>
+            <h4>トランザクション内容</h4>
+            <textarea rows=12 matInput formControlName="transactionText" ></textarea>
+        </mat-form-field>
+    </form>
+               
+    <div class="button-row">
+        <button mat-raised-button (click)="onCancel()" class="button-m">キャンセル</button>
+        <button mat-raised-button (click)="onGo()" class="button-m">実行</button>
+    </div>       
+</div>        

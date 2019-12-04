@@ -1,0 +1,26 @@
+<ng-container *ngIf = "position$ | async as positions">
+    <mat-toolbar color="primary">
+        <span class = "toolbar-top">役職一覧</span>
+    </mat-toolbar>
+    <div class="message-t">
+        クリックすると詳細を表示して編集ができます。
+    </div>
+    <div class="outline">
+        <div>
+            <span class="header-pos1">コード</span>
+            <span class="header-pos2">名前</span>
+        </div>            
+        <mat-nav-list>
+            <mat-list-item *ngFor="let position of positions" 
+                (click)="onSelect(position.id)">
+                    <span>{{ position.pos_code }}</span>
+                    <span class="item-pos">{{ position.pos_name }}</span>
+            </mat-list-item>  
+        </mat-nav-list>
+        <div class="button-row">
+            <button mat-raised-button (click)="onCancel()" class="button-m">キャンセル</button>
+            <button mat-raised-button (click)="onNew()" class="button-m">新規</button>
+        </div>       
+    </div> 
+</ng-container>
+    

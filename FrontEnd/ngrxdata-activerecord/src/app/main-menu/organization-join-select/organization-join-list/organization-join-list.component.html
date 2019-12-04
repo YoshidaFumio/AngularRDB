@@ -1,0 +1,38 @@
+<ng-container *ngIf = "branch$ | async as branches">
+    <ng-container *ngIf = "position$ | async as positions">
+        <ng-container *ngIf = "organization$ | async as organizations">
+            <ng-container *ngIf = "calculation$ | async as calculations">
+                <ng-container *ngIf = "organizationjoin$ | async as organizationjoins">
+                    <app-bridge [inputdata]=branches (outputEvent)="getCurrent($event)"></app-bridge>
+                    <mat-toolbar color="primary">
+                        <span class = "toolbar-top">従業員一覧 （部門別）</span>
+                    </mat-toolbar>
+                    <div class="message-t">
+                        英語の平均点数　{{ calculations[0]?.value }}
+                    </div>
+                    <div class="message-t">
+                            クリックすると詳細を表示します。
+                    </div>
+                    <div class="outline">
+                        <div>
+                            <span class="header-pos1">姓</span>
+                            <span class="header-pos2">名</span>
+                            <span class="header-pos3">事業所</span>
+                        </div>            
+                        <mat-nav-list>
+                            <mat-list-item *ngFor="let organizationjoin of organizationjoins" 
+                                (click)="onSelect(organizationjoin.joinid)">
+                                    <span class="item-pos1">{{ organizationjoin.last_name }}</span>
+                                    <span class="item-pos2"> {{ organizationjoin.first_name }}</span>
+                                    <span class="item-pos3">{{ dspBranch(organizationjoin.branch_id)}}</span>
+                            </mat-list-item>  
+                        </mat-nav-list>
+                        <div class="button-row">
+                            <button mat-raised-button (click)="onCancel()" class="button-m">キャンセル</button>
+                        </div>       
+                    </div>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </ng-container>        
+</ng-container>

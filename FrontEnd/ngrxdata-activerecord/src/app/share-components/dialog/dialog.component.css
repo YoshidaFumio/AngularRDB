@@ -1,0 +1,12 @@
+.priv-bottom{
+    margin-bottom: 20px ;
+    margin-left: 100px ;
+}
+
+.priv-error{
+    color: #f44336 ;
+}
+
+.priv-information{
+    color: #673ab7 ;
+}

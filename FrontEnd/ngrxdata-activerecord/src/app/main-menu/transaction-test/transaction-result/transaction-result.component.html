@@ -1,0 +1,16 @@
+<ng-container *ngIf = "transaction$ | async as transactions">
+    <mat-toolbar color="primary">
+        <span class = "toolbar-top">事業所一覧</span>
+    </mat-toolbar>
+    <div>
+        <h3>Transactionの内容</h3>
+
+        <ng-container *ngFor="let transaction of transactions">
+            <div>status: {{ transaction.status}}</div>
+            <div>message: {{ transaction.message}}</div>
+        </ng-container>
+    </div>
+    <div class="button-row">
+        <button mat-raised-button (click)="onCancel()" class="button-m">キャンセル</button>
+    </div>       
+</ng-container>

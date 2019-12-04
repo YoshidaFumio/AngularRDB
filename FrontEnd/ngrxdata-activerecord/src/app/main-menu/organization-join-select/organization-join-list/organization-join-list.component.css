@@ -1,0 +1,47 @@
+.toolbar-top {
+    margin: 0 auto ;
+}
+.message-t {
+    margin-left: 10% ;
+    text-align: center ;
+}
+
+.outline {
+    border :3px solid black ;
+    width:80% ;
+    margin-left:10% ;
+}
+.header-pos1 {   
+    margin-left:5%  ;
+}
+.header-pos2 {
+    margin-left:20%  ;
+}
+
+.header-pos3 {
+
+    margin-left:20%  ;
+}
+
+.item-pos1 {
+    position: absolute ;
+    left: 5% ;
+}
+.item-pos2 {
+    position: absolute ;
+    left: 25% ;
+}
+.item-pos3 {
+    position: absolute ;
+    left: 50%  ;
+}
+
+
+.example-button-row button,
+.example-button-row a {
+  margin-right: 70px;
+}
+
+.button-m{
+    margin:20px 20px 20px 20px;
+}

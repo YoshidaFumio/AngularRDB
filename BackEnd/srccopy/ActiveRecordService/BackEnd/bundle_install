@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+# Install gem via gemfile
+#
+bundle install --path vendor/bundle

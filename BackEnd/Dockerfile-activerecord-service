@@ -1,0 +1,34 @@
+FROM ruby:2.6.5-slim-buster
+
+MAINTAINER "fumio.yoshida@star-applications.com
+
+# add library for MySQL,nginx,native extensions ...
+ENV DEBCONF_NOWARNINGS yes
+RUN apt-get -y update && apt-get -y upgrade && \
+    apt-get -y install mariadb-server libmariadb-dev && \
+    apt-get install -y build-essential libpq-dev nodejs && \
+    apt-get -y install nginx
+
+
+# Nginx
+RUN rm -f /etc/nginx/conf.d/*
+ADD nginx.conf /etc/nginx/conf.d/webapp.conf
+
+#Sinatra
+copy srccopy/ /usr/src/
+WORKDIR /usr/src/ActiveRecordService/BackEnd
+RUN gem install bundler  && \
+    bundle install --path vendor/bundle && \
+    rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/*
+
+#Environment
+ENV APP_ENV development
+ENV PROJECTNAME Ngrxdata activerecord sample
+ENV DB_HOSTNAME database
+ENV DB_DATABASE ngrxd-ar-sample
+ENV DB_USERNAME dbuser
+ENV DB_PASSWORD xodarap
+
+# Start Server
+CMD bundle exec puma -d -C config/puma.rb && \
+    /usr/sbin/nginx -g 'daemon off;' -c /etc/nginx/nginx.conf

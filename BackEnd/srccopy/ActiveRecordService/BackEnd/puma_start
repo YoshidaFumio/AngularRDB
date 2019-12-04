@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# execute puma and sinatra program
+#  sinatra program write in config.ru
+#
+export APP_ENV="development"
+export PROJECTNAME="profile"
+export DB_HOST="192.168.70.12"
+export DB_DATABASE="JPprofile001"
+export DB_USERNAME="dbuser"
+export DB_PASSWORD="Prof@3456"
+bundle exec pumactl start

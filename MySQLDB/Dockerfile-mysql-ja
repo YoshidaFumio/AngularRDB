@@ -1,0 +1,16 @@
+FROM mysql:5.7
+
+MAINTAINER "fumio.yoshida@star-applications.com"
+
+ENV MYSQL_ROOT_PASSWORD root
+ENV MYSQL_DATABASE ngrxd-ar-sample
+ENV MYSQL_USER dbuser
+ENV MYSQL_PASSWORD xodarap
+ENV TZ Asia/Tokyo
+
+copy "japanese.cnf" "/etc/mysql/conf.d"
+copy "src_dbinit" "/usr/etc"
+copy "database_init.sh" "docker-entrypoint-initdb.d"
+
+EXPOSE 3306
+CMD ["mysqld"]

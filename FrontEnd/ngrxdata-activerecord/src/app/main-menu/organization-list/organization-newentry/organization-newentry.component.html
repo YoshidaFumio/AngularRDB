@@ -1,0 +1,34 @@
+<ng-container *ngIf = "organization$ | async as organizations">
+    <app-bridge [inputdata]=organizations (outputEvent)="getCurrent($event)"></app-bridge>
+    <mat-toolbar color="primary">
+        <span class = "toolbar-top">部門追加</span>
+    </mat-toolbar>
+    <div class="outline">
+        <form [formGroup]="organizationForm" (ngSubmit)="onSave">
+            <!-- code -->
+            <mat-form-field>
+                <input matInput placeholder="コード" formControlName="code" #code>
+                <ng-container *ngIf=" code.invalid && (code.dirty || code.touched)">
+                    <p *ngIf="code.errors.required">
+                        Code is required.
+                    </p>
+                </ng-container>
+            </mat-form-field>
+            <!-- Name -->
+            <mat-form-field>
+                <input matInput placeholder="名前" formControlName="name" #name>
+                <ng-container *ngIf=" name.invalid && (name.dirty || name.touched)" >
+                    <p *ngIf="name.errors.required">
+                        Name is required.
+                    </p>
+                </ng-container>
+            </mat-form-field>
+        </form>
+
+        <div class="button-row">
+            <button mat-raised-button (click)="onCancel()" class="button-m">キャンセル</button>
+            <button mat-raised-button type="submit]" class="button-m">保存</button>
+        </div>       
+    </div>
+</ng-container>
+

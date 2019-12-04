@@ -1,0 +1,56 @@
+<ng-container *ngIf = "organizationjoin$ | async as organizationjoins">
+  <app-bridge [inputdata]=organizationjoins (outputEvent)="getCurrent($event)"></app-bridge>
+    <ng-container *ngIf = "branch$ | async as branches">
+      <app-bridge [inputdata]=branches (outputEvent)="getBranch($event)"></app-bridge>
+        <ng-container *ngIf = "position$ | async as positions">
+          <app-bridge [inputdata]=positions (outputEvent)="getPosition($event)"></app-bridge>
+            <mat-toolbar color="primary">
+                <span class = "toolbar-top">従業員詳細表示　（部門別）</span>
+            </mat-toolbar>
+              <div class="outline">
+                <mat-list>
+                    <mat-list-item>
+                        <span>部門：</span>
+                        <span class="item-pos1">{{ curOrganizationjoin.org_name}}</span>
+                    </mat-list-item>  
+                    <mat-list-item>
+                        <span>役職：</span>
+                        <span class="item-pos1">{{ dspPosition(curOrganizationjoin.position_id) }}</span>
+                    </mat-list-item>  
+                    <mat-list-item>
+                        <span>名前：</span>
+                        <span class="item-pos1">{{ curOrganizationjoin.last_name}}</span>
+                        <span class="item-pos2"> {{curOrganizationjoin.first_name }}</span>
+                    </mat-list-item>  
+                    <mat-list-item>
+                        <span>携帯電話：</span>
+                        <span class="item-pos1">{{ curOrganizationjoin.mobile_number}}</span>
+                    </mat-list-item>  
+                    <mat-list-item>
+                        <span>メール：</span>
+                        <span class="item-pos1">{{ curOrganizationjoin.mail_address}}</span>
+                    </mat-list-item>  
+                    <mat-list-item>
+                        <span>Twitter：</span>
+                        <span class="item-pos1">{{ curOrganizationjoin.twitter_link}}</span>
+                    </mat-list-item>  
+                    <mat-list-item>
+                        <span>誕生日：</span>
+                        <span class="item-pos1">{{ curOrganizationjoin.birthday | date }}</span>
+                    </mat-list-item>  
+                    <mat-list-item>
+                        <span>入社日：</span>
+                        <span class="item-pos1">{{ curOrganizationjoin.entering_company | date}}</span>
+                    </mat-list-item>  
+                    <mat-list-item>
+                        <span>英語の成績：</span>
+                        <span class="item-pos1">{{ curOrganizationjoin.english_test}}</span>
+                    </mat-list-item>  
+                </mat-list>
+                <div class="button-row">
+                    <button mat-raised-button (click)="onCancel()" class="button-m">キャンセル</button>
+                </div>       
+              </div>
+        </ng-container>
+    </ng-container>        
+</ng-container>

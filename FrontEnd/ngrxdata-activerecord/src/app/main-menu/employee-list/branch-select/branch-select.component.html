@@ -1,0 +1,24 @@
+<ng-container *ngIf = "branch$ | async as branches">
+    <mat-toolbar color="primary">
+        <span class = "toolbar-top">従業員一覧　事業所の選択</span>
+    </mat-toolbar>
+    <div class="message-t">
+        クリックすると該当の従業員一覧が出てきます。
+    </div>
+    <div class="outline">
+        <div>
+            <span class="header-pos1">コード</span>
+            <span class="header-pos2">名前</span>
+        </div>            
+        <mat-nav-list>
+            <mat-list-item *ngFor="let branch of branches" 
+                (click)="onGo(branch.id)">
+                    <span>{{ branch.branch_code }}</span>
+                    <span class="item-pos"> {{ branch.branch_name }}</span>
+            </mat-list-item>  
+        </mat-nav-list>
+        <div class="button-row">
+            <button mat-raised-button (click)="onCancel()" class="button-m">キャンセル</button>
+        </div>       
+    </div>        
+</ng-container>
