@@ -1,13 +1,15 @@
-# Angular-RDB
+# AngulaRDB
 Access to RDB from Angular using @ngrx/data and ActiveRecord
 
 ## Preparation
-1. git clone this repository in your local disk
-2. cd Angular-RDB
+1. Make clone  in your local disk
+2. cd AngularRDB
 3. docker-compose build
-4. docker-compose up     //docker containers (activerecord-service & database) UP
-5. docker-compose down   //close and delete images
+4. docker-compose up    
+5. docker-compose down   
 
+* (docker-compose up -d)2 docker containers (activerecord-service & database) UP
+* (docker-compose down)close and delete images
 
 ## Running
 1. If you want run compiled Angular then input http://localhost:4567/ in your browser.
@@ -26,21 +28,23 @@ Access to RDB from Angular using @ngrx/data and ActiveRecord
 - remove src directory
 - copy src directory from repository
 
+```Javascript:angular.json
    edit angular.json following
-   ```javascript:angular.json
           :
           :
     "serve": {
-    "builder": "@angular-devkit/build-angular:dev-server",
-    "options": {
-    "browserTarget": "ngrxdata-activerecord:build",
-    "proxyConfig": "src/proxy.conf.js"  <- add this line for api cross
+      "builder": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "browserTarget": "ngrxdata-activerecord:build",
+        "proxyConfig": "src/proxy.conf.js"  <- add this line for api cross
     },
-    ```
+```
 
 ## Version
 - Angular  8.2.14 need > 8.x.x
 - ngrx  8.5.2  need > 8.x.x
 - MySQL 5.7
 - Ruby 2.6.5
-- sinatra
+- sinatra 2.0.7
+- puma 4.3.0
+- ActiveRecord 6.0.2
