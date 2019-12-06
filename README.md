@@ -5,7 +5,7 @@ Access to RDB from Angular using @ngrx/data and ActiveRecord
 1. Make clone  in your local disk
 2. cd AngularRDB
 3. docker-compose build
-4. docker-compose up    
+4. docker-compose up -d  
 5. docker-compose down   
 
 * (docker-compose up -d)2 docker containers (activerecord-service & database) UP
@@ -13,7 +13,7 @@ Access to RDB from Angular using @ngrx/data and ActiveRecord
 
 ## Running
 1. If you want run compiled Angular then input http://localhost:4567/ in your browser.
-   
+
 
 2. If you want see source and implement do following .
 - ng new newproject
