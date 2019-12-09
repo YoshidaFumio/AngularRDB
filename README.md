@@ -27,22 +27,24 @@ Access to RDB from Angular using @ngrx/data and ActiveRecord
 
 - remove src directory
 - copy src directory from repository
+- edit angular.json following
 
 ```Javascript:angular.json
-   edit angular.json following
           :
           :
     "serve": {
       "builder": "@angular-devkit/build-angular:dev-server",
       "options": {
         "browserTarget": "ngrxdata-activerecord:build",
-        "proxyConfig": "src/proxy.conf.js"  <- add this line for api cross
+        "proxyConfig": "src/proxy.conf.js" 
     },
 ```
+- add 'proxyConfig' for Angular CLI proxy
+- ng serve
 
 ## Version
-- Angular  8.2.14 need > 8.x.x
-- ngrx  8.5.2  need > 8.x.x
+- Angular  8.2.14 necessary > 8.0.0
+- ngrx  8.5.2  necessary > 8.0.0
 - MySQL 5.7
 - Ruby 2.6.5
 - sinatra 2.0.7

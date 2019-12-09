@@ -51,7 +51,7 @@
                             <!-- input matInput placeholder="事業所"  formControlName="branch_id"-->
                             <mat-label>事業所の変更</mat-label>
                             <mat-select formControlName="branch_id">
-                                <mat-option *ngFor="let branch of branches" (value)="branch.id">
+                                <mat-option *ngFor="let branch of branches" [value]="branch.id">
                                     {{branch.branch_name}}
                                 </mat-option>
                             </mat-select>
@@ -64,7 +64,7 @@
                             <!-- input matInput placeholder="部門"  formControlName="organization_id" -->
                             <mat-label>部門の変更</mat-label>
                             <mat-select formControlName="organization_id">
-                                <mat-option *ngFor="let organization of organizations" (value)="organization.id">
+                                <mat-option *ngFor="let organization of organizations" [value]="organization.id">
                                     {{organization.org_name}}
                                 </mat-option>
                             </mat-select>
@@ -77,7 +77,7 @@
                             <!-- input matInput placeholder="役職"  formControlName="position_id" -->
                             <mat-label>役職の変更</mat-label>
                             <mat-select formControlName="position_id">
-                                <mat-option *ngFor="let position of positions" (value)="position.id" >
+                                <mat-option *ngFor="let position of positions" [value]="position.id" >
                                     {{position.pos_name}}
                                 </mat-option>
                             </mat-select>
