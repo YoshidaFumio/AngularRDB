@@ -6,7 +6,7 @@ import { Branch ,  BranchService  } from '../../../models/branch';
 import { Organization ,  OrganizationService  } from '../../../models/organization';
 import { Position ,  PositionService  } from '../../../models/position';
 import { FormGroup, FormControl,FormBuilder , Validators} from '@angular/forms';
-import { MatDialog } from '@angular/material' ;
+import { MatDialog } from '@angular/material/dialog' ;
 import { DialogComponent } from '../../../share-components/dialog/dialog.component';
 import { DialogOkNgComponent } from '../../../share-components/dialog-ok-ng/dialog-ok-ng.component';
 

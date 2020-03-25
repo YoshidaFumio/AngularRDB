@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute ,Router, NavigationExtras} from '@angular/router' ;
 import { Organization ,  OrganizationService  } from '../../../models/organization';
 import { FormGroup, FormControl,FormBuilder,Validator, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material' ;
+import { MatDialog } from '@angular/material/dialog' ;
 import { DialogComponent } from '../../../share-components/dialog/dialog.component';
 import { DialogOkNgComponent } from '../../../share-components/dialog-ok-ng/dialog-ok-ng.component';
 

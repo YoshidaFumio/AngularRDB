@@ -89,8 +89,9 @@ import { TransactionResultComponent } from './main-menu/transaction-test/transac
         strictActionImmutability: true
       }
     }),
-    EffectsModule.forRoot([AppEffects]),
-    EntityDataModule.forRoot(entityConfig)
+    EffectsModule.forRoot([AppEffects, ]),
+    EntityDataModule.forRoot(entityConfig),
+    StoreModule.forRoot({}, {})
 
   ],
   providers: [{ provide: DefaultDataServiceConfig,useValue: defaultDataServiceConfig}],
