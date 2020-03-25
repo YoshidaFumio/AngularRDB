@@ -1,21 +1,20 @@
-# AngulaRDB
-Access to RDB from Angular using @ngrx/data and ActiveRecord
+# AngularRDB
+This is Japanese Version 
+Angular から @ngrx/data と ActiveRecord を使ってRDBにアクセスします
 
 ## SetUP
-1. Make clone  in your local disk
-2. cd AngularRDB
-3. docker-compose build
-4. docker-compose up -d  
-5. docker-compose down   
+ローカルディスクにクローンを作成後、以下を実行します
+1. cd AngularRDB
+2. docker-compose build
+3. docker-compose up -d  
 
-* (docker-compose up -d)2 docker containers (activerecord-service & database) UP
-* (docker-compose down)close and delete images
+* (activerecord-service & database) 2つのコンテナが起動します
 
 ## Running
-1. If you want run compiled Angular then input http://localhost:4567/ in your browser.
+1. コンパイル済のバージョンを実行する場合ブラウザから次の入力をします http://localhost:4567/
 
 
-2. If you want implement in your project do following .
+2. 自分でソースを検証する場合、以下のように実行します
 - ng new newproject
 - cd newproject
 - ng add @ngrx/store
@@ -25,9 +24,9 @@ Access to RDB from Angular using @ngrx/data and ActiveRecord
 - ng add @angular/material
 - npm i @angular/flex-layout --save
 
-- remove src directory
-- copy src directory from repository
-- edit angular.json following
+- 上記Angular Project の src ディレクトリ以下を削除します
+- クローンのFrontEnd-src/ngrxdata-activerecord 下の src 以下を持ってきます（コピー）
+- angular.json を編集して、以下のようにproxyConfig を追加します
 
 ```Javascript:angular.json
           :
@@ -39,12 +38,17 @@ Access to RDB from Angular using @ngrx/data and ActiveRecord
         "proxyConfig": "src/proxy.conf.js" 
     },
 ```
-- add 'proxyConfig' for Angular CLI proxy
+
 - ng serve
 
+## Finish
+終了する場合は、以下のコマンドで終了する。
+1. docker-compose down
+
 ## Version
-- Angular  8.2.14 necessary > 8.0.0
-- ngrx  8.5.2  necessary > 8.0.0
+- Angular  9.0.7 necessary > 9.0.0
+- AngularMaterial 9.1.3 necessary > 9.0.0
+- ngrx  9.0.0  necessary > 9.0.0
 - MySQL 5.7
 - Ruby 2.6.5
 - sinatra 2.0.7
