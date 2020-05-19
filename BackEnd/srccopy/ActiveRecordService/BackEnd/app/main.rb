@@ -125,7 +125,7 @@ class ServerApp < Sinatra::Base
   #
   # === Parameters
   # * +model+ - Modelclass  (DB table )
-  # * 
+  # *
   # === Return
   # * +status+ - 200 OK,400 Err etc
   # * +body+ - read multiplr records
@@ -136,7 +136,7 @@ class ServerApp < Sinatra::Base
     records = []
     results = []
     result = {'id' =>  1}
-    if request.query_string == "" then 
+    if request.query_string == "" then
       halt 400,"Query param not found"
     else                  #api/arreadwrite/finders/?where(~)
       query_param = CGI.unescape(request.query_string)
@@ -158,7 +158,7 @@ class ServerApp < Sinatra::Base
         result['count']= records.length
         result['status'] = true
       else
-        result['count']= 0       
+        result['count']= 0
         result['status'] = true
       end
     rescue => e
@@ -174,7 +174,7 @@ class ServerApp < Sinatra::Base
   #
   # === Parameters
   # * +model+ - Modelclass  (DB table )
-  # * 
+  # *
   # === Return
   # * +status+ - 200 OK,400 Err etc
   # * +body+ - read multiplr records
@@ -185,7 +185,7 @@ class ServerApp < Sinatra::Base
     values = 0
     results = []
     result = {'id' =>  1}
-    if request.query_string == "" then 
+    if request.query_string == "" then
       halt 400,"Query param not found"
     else                  #api/arreadwrite/calculations/?where(~)
       query_param = CGI.unescape(request.query_string)
@@ -204,7 +204,7 @@ class ServerApp < Sinatra::Base
       eval evalstr
       #records = Employee.where(corporation_id: '2')
         result['status']= 'success'
-        result['value']= values       
+        result['value']= values
     rescue => e
       halt 500,"Error Occured (#{e.message})"
     end
@@ -259,7 +259,7 @@ class ServerApp < Sinatra::Base
   #
   # === Parameters
   # * +model+ - Modelclass  (DB table )
-  # * 
+  # *
   # === Return
   # * +status+ - 200 OK,400 Err etc
   # * +body+ - read multiplr records
@@ -275,7 +275,7 @@ class ServerApp < Sinatra::Base
       else                  #api/arreadwrite/models/?where(~)
         if settings.development?
           puts "Query param : " + request.query_string
-        end  
+        end
         query_param = CGI.unescape(request.query_string)
         query_param.gsub!("0x22","0x5c0x22")
         query_param.gsub!("0x27","0x5c0x27")
@@ -309,7 +309,7 @@ class ServerApp < Sinatra::Base
           query_param.gsub!("0x27","0x5c0x27")
           if query_param[-1,1] == '='
             query_param.slice!(-1,1)
-          end  
+          end
         end
         evalstr = "records = " + model + "." + query_param
         # evalstr = evalstr.dump
@@ -328,7 +328,7 @@ class ServerApp < Sinatra::Base
         outrecords=[]
         records.each_with_index do |record ,idx|
           recordj = record.to_json
-          recordp = JSON.parse(recordj) 
+          recordp = JSON.parse(recordj)
           item = {}
           item['joinid']=idx+1 #id number start from 1 not zero
           item = item.merge(recordp)
@@ -338,7 +338,7 @@ class ServerApp < Sinatra::Base
       else
         halt 400,"ModelName not found #{params[:model]}"
       end
-    end  
+    end
   end
   ##
   # ==  Transaction proccess
@@ -395,7 +395,7 @@ class ServerApp < Sinatra::Base
     reqdata = JSON.parse(request.body.read.to_s)
     #
     # create 1 record
-    # 
+    #
     evalstr = "record = #{model}.new"
     if settings.development?
       puts "Create eval : " + evalstr
@@ -407,7 +407,7 @@ class ServerApp < Sinatra::Base
     end
     #
     # get request data from body
-    # 
+    #
     reqdata.each_key do |key|
       if ['id','created_at','updated_at'].include?(key) then
         next
@@ -417,7 +417,7 @@ class ServerApp < Sinatra::Base
         next
       end
       if key == "lock_version" then
-         record[key] = 0 
+         record[key] = 0
          break
       end
       record[key]=reqdata[key]
@@ -458,12 +458,12 @@ class ServerApp < Sinatra::Base
     end
     begin
       eval evalstr
-      # retstr= { 'id' => params[:id], 'message' => 'deleted'}
-      # retstr.to_json
-      retstr = 'Delete success'
+      retstr= { 'id' => params[:id], 'message' => 'deleted'}
+      retstr.to_json
+      # retstr = 'Delete success'
     rescue => e
       halt 500," Error Occured #{e.message}"
-    end    
+    end
   end
   ##
   # ==  Update 1 record
@@ -492,7 +492,7 @@ class ServerApp < Sinatra::Base
     reqdata = JSON.parse(request.body.read.to_s)
     #
     # get request record
-    # 
+    #
     # make  evalstring example "record = Emplyee.find_by(id: 3)"
     evalstr = "record = #{model}.find_by(id: #{params[:id]})"
     if settings.development?
@@ -512,12 +512,12 @@ class ServerApp < Sinatra::Base
     end
     #
     # check optimistic lock
-    # 
+    #
     if record['lock_version'] > reqdata['lock_version'] then
         halt 400,"Data is already updated by another user"
     #
     # Update Record field  from request data except id ,datetime
-    # 
+    #
     else
       reqdata.each_key do |key|
         if  ['id','created_at','updated_at'].include?(key)  then
@@ -538,9 +538,9 @@ class ServerApp < Sinatra::Base
       halt 400,"UPDATE error in save mode"
     end
   end
-#
-#  Angular load
-#
+  #
+  #  index html load
+  #
   get '/*' do
     #  erb :index , :layout => false
       send_file File.join(settings.public_folder,'index.html')

@@ -1,8 +1,10 @@
-<h3 mat-dialog-title [style.color]="isError? '#f44336':'#673ab7' ">{{data.title}}</h3>
+<h3 mat-dialog-title [style.color]="isError? '#f44336':'#673ab7'" class="title-top">
+  {{data.title}}
+</h3>
 <mat-dialog-content *ngFor="let message of data.message" [style.color]="isError? '#f44336':'#673ab7' ">
-   {{message}}
+   <div>{{message}}</div>
 </mat-dialog-content>
 <mat-dialog-actions>
   <!-- button mat-raised-button [mat-dialog-close]="true" class="priv-bottom">閉じる</button -->
-  <button mat-raised-button class="priv-bottom">閉じる</button>
+  <button mat-raised-button class="priv-bottom"(click)="onClickButton()">閉じる</button>
 </mat-dialog-actions>

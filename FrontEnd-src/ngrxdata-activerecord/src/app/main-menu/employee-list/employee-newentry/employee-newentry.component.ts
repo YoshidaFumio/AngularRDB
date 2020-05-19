@@ -6,8 +6,7 @@ import { Branch ,  BranchService  } from '../../../models/branch';
 import { Organization ,  OrganizationService  } from '../../../models/organization';
 import { Position ,  PositionService  } from '../../../models/position';
 import { FormGroup, FormControl,FormBuilder , Validators} from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog' ;
-import { DialogComponent } from '../../../share-components/dialog/dialog.component';
+import { DialogService } from '../../../services/dialog.service';
 import { DialogOkNgComponent } from '../../../share-components/dialog-ok-ng/dialog-ok-ng.component';
 
 @Component({
@@ -38,7 +37,7 @@ export class EmployeeNewentryComponent implements OnInit {
     private organizationService: OrganizationService, 
     private positionService: PositionService, 
     private fb: FormBuilder ,
-    private matdialog:MatDialog  
+    private dialogService : DialogService  
     ) {
         this.employee$ = employeeService.entities$ ;
         this.branch$ = branchService.entities$ ;
@@ -48,19 +47,53 @@ export class EmployeeNewentryComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(res =>{
-      this.return_id = res['id']
+      this.return_id = res['id'] ;
+      this.createForm();
     });
-    this.createForm();
   }
 
 
-  onCancel(){
+  onClose(){
     let extra:NavigationExtras = { }
     this.navroute.navigate(['/employeelist',this.return_id],extra);
   }
 
 
-  onSave() {
+  onCreate() {
+    this.errMessage = [] ;
+    this.errCount = 0 ;
+    if (this.employeeForm.value['first_name']==='') {
+      this.errMessage[this.errCount]="411."+"名前が入力されていません"
+      this.errCount ++ ;
+    }
+
+    if (this.employeeForm.value['last_name']==='') {
+      this.errMessage[this.errCount]="421."+"姓が入力されていません"
+      this.errCount ++ ;
+    }
+    if (this.employeeForm.value['mail_address']==='') {
+      this.errMessage[this.errCount]="431."+"eメールが入力されていません"
+      this.errCount ++ ;
+    }
+    /*
+    if (this.employeeForm.value['branch_id']=== -1) {
+      this.errMessage[this.errCount]="441."+"事業所が入力されていません"
+      this.errCount ++ ;
+    }
+    */
+    if (this.employeeForm.value['organization_id']=== -1) {
+      this.errMessage[this.errCount]="451."+"組織が入力されていません"
+      this.errCount ++ ;
+    }
+    if (this.employeeForm.value['position_id']=== -1) {
+      this.errMessage[this.errCount]="461."+"役職が入力されていません"
+      this.errCount ++ ;
+    }
+    if (this.errCount > 0){
+      this.dialogService.errorDisplay("入力エラー",this.errMessage)
+      return
+    }
+
     let empdata = new Employee ;
     empdata.first_name = this.employeeForm.value['first_name'] ;
     empdata.last_name = this.employeeForm.value['last_name'] ;
@@ -70,7 +103,7 @@ export class EmployeeNewentryComponent implements OnInit {
     empdata.birthday = this.employeeForm.value['birthday'] ;
     empdata.entering_company = this.employeeForm.value['entering_company'] ;
     empdata.english_test = this.employeeForm.value['english_test'] ;
-    empdata.branch_id = this.employeeForm.value['branch_id'] ;
+    empdata.branch_id = this.return_id ;
     empdata.position_id = this.employeeForm.value['position_id'] ;
     empdata.organization_id = this.employeeForm.value['organization_id'] ;
     empdata.lock_version = 0 ;
@@ -89,9 +122,9 @@ export class EmployeeNewentryComponent implements OnInit {
       birthday: [''],
       entering_company: [''],
       english_test: [''],
-      branch_id: ['1',Validators.required],
-      organization_id: ['4',Validators.required],
-      position_id: ['9',Validators.required],
+      // branch_id: [this.return_id],
+      organization_id: [-1],
+      position_id: [-1],
     });
   }
 

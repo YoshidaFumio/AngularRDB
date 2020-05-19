@@ -74,7 +74,7 @@ export class OrganizationJoinListComponent implements OnInit {
     return this.curBranch.branch_name
 }
 
-  onCancel(){
+  onClose(){
     let extra:NavigationExtras = { }
     this.navroute.navigate(['/organizationjoinselect'],extra);
   }

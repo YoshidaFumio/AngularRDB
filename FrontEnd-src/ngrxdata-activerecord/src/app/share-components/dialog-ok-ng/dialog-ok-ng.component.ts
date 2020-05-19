@@ -18,7 +18,7 @@ export class DialogOkNgComponent {
     this.matDialogRef.close('OK');
   }
   onClickCancelButton():void {
-    // CANCELボタンが押されたときは「OK」を呼び出し元に渡す。
+    // CANCELボタンが押されたときは「Cancel」を呼び出し元に渡す。
     this.matDialogRef.close('Cancel');
   }
 }

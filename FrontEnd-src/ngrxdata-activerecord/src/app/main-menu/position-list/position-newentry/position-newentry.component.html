@@ -6,20 +6,19 @@
     <div class="outline">
         <form [formGroup]="positionForm"  novalidate>
             <!-- code -->
-            <mat-form-field>
-                <input matInput placeholder="コード" 
-                     formControlName="code">
+            <mat-form-field class="inbox">
+                <input matInput placeholder="コード" formControlName="code" required>
             </mat-form-field>
+
             <!-- Name -->
-            <mat-form-field>
-                <input matInput placeholder="名前"
-                    formControlName="name">
+            <mat-form-field class="inbox">
+                <input matInput placeholder="名前" formControlName="name" required>
             </mat-form-field>
         </form>
 
         <div class="button-row">
-            <button mat-raised-button (click)="onCancel()" class="button-m">キャンセル</button>
-            <button mat-raised-button (click)="onSave()" class="button-m">保存</button>
+            <button mat-raised-button (click)="onClose()" class="button-m">閉じる</button>
+            <button mat-raised-button (click)="onCreate()" class="button-m">作成</button>
         </div>       
     </div>
 </ng-container>

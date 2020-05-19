@@ -1,12 +1,12 @@
-import { Component, OnInit , ChangeDetectionStrategy, ɵSWITCH_RENDERER2_FACTORY__POST_R3__ } from '@angular/core';
+import { Component, OnInit , ChangeDetectionStrategy,
+         ChangeDetectorRef, ɵSWITCH_RENDERER2_FACTORY__POST_R3__ } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute ,Router, NavigationExtras} from '@angular/router' ;
 import { Organization ,  OrganizationService  } from '../../../models/organization';
 import { FormGroup, FormControl,FormBuilder,Validator, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog' ;
-import { DialogComponent } from '../../../share-components/dialog/dialog.component';
+import { DialogService } from '../../../services/dialog.service';
 import { DialogOkNgComponent } from '../../../share-components/dialog-ok-ng/dialog-ok-ng.component';
-
 
 @Component({
   selector: 'app-organization-detail',
@@ -25,13 +25,17 @@ export class OrganizationDetailComponent implements OnInit {
   errMessage = [] ;
   errCount :number ;
 
+
   constructor(
     private route: ActivatedRoute , //for get router paramaeter
     private navroute : Router ,
     private organizationService: OrganizationService, 
     private fb: FormBuilder ,
-    private matdialog:MatDialog  
-    ) {
+    private matdialog: MatDialog ,
+    private dialogService: DialogService,
+    private changeDetectotRef : ChangeDetectorRef ,
+    ) 
+    {
         this.organization$ = organizationService.entities$ ;
   }
 
@@ -53,9 +57,10 @@ export class OrganizationDetailComponent implements OnInit {
                 return (target.id == this.id) ;
               });
     this.createForm() ;
+  //  this.changeDetectotRef.detectChanges ;
   }
 
-  onCancel(){
+  onClose(){
     let extra:NavigationExtras = { }
     this.navroute.navigate(['/organizationlist'],extra);
   }
@@ -75,13 +80,43 @@ export class OrganizationDetailComponent implements OnInit {
       if (this.alertDialogResult=='OK') {
         this.organizationService.delete(this.curOrganization.id) ;
         let extra:NavigationExtras = { }
-        this.navroute.navigate(['/organizationlist'],extra);           
-      }      
+        this.navroute.navigate(['/organizationlist'],extra);                
+      }
     });
   }
 
-  onSave() {
-    /* if (!this.checkForm()){ return } */
+  onUpdate() {
+    /* Check Data*/
+    this.errMessage = [] ;
+    this.errCount = 0 ;
+    if (this.organizationForm.value['code']==='') {
+      this.errMessage[this.errCount]="201."+"コードが入力されていません"
+      this.errCount ++ ;
+    }
+    else {
+      let codeu = this.organizationForm.value['code']
+      let mret = this.organizationTable.findIndex(
+        (target) =>{
+          return (target.org_code === codeu)
+        }
+      )
+      if ( mret != this.row) {
+        if (mret != -1){
+          this.errMessage[this.errCount]="202."+"コードが重複してます"
+          this.errCount ++ ;  
+        }
+      }
+    }
+
+    if (this.organizationForm.value['name']==='') {
+      this.errMessage[this.errCount]="211."+"名前が入力されていません"
+      this.errCount ++ ;
+    }
+    if (this.errCount > 0){
+      this.dialogService.errorDisplay("入力エラー",this.errMessage)
+      return
+    }
+    /* Setup Data*/
     let orgdata = new Organization ;
     orgdata.id = this.curOrganization.id ;
     orgdata.org_code = this.organizationForm.value['code'] ;
@@ -97,36 +132,6 @@ export class OrganizationDetailComponent implements OnInit {
       code: [this.curOrganization.org_code,Validators.required] ,
       name: [this.curOrganization.org_name,Validators.required]
     });
-  }
-
-  checkForm():boolean {
-    this.errMessage = [] ;
-    this.errCount = 0 ;
-    if  (this.organizationForm.value['code']='' ){
-      this.errMessage[this.errCount] = (this.errCount+1) +".コードが入力されていません。";
-      this.errCount += 1 ;
-    }
-    if  (this.organizationForm.value['name']='' ){
-      this.errMessage[this.errCount] = (this.errCount+1) +".名前が入力されていません。";
-      this.errCount += 1 ;
-    }
-    // エラーダイアログの表示
-    if (this.errCount > 0) {
-      let dialog2 = this.matdialog.open(DialogComponent, {
-        'data' : {'title': 'エラー' , 'message' : this.errMessage},
-　　　　/*        'height' : '240px',*/
-        'width' : '280px',
-        'disableClose' : false
-      });
-      dialog2.afterClosed().subscribe( result => {
-        console.log("error occur")
-        return　false ;
-      })
-    }
-    else{
-      return true ;
-    }
-
   }
 
 }

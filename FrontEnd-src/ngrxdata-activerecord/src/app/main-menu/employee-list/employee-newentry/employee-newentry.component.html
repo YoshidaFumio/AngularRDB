@@ -8,59 +8,52 @@
                 <div class="outline">
                     <form [formGroup]="employeeForm">
                         <!-- code -->
-                        <mat-form-field>
-                            <input matInput placeholder="姓" formControlName="last_name" >
-                            <!-- mat-error *ngIf="last_name.hasERROR('required')">
-                                Family Name is required
-                            </mat-error -->
+                        <mat-form-field class="inbox">
+                            <input matInput placeholder="姓" formControlName="last_name" required>
                         </mat-form-field>
                         <!-- Name -->
-                        <mat-form-field>
-                            <input matInput placeholder="名" formControlName="first_name">
-                            <!-- mat-error *ngIf="first_name.hasERROR('required')">
-                                    First Name is required
-                            </mat-erro -->
+                        <mat-form-field class="inbox">
+                            <input matInput placeholder="名" formControlName="first_name" required>
                         </mat-form-field>
-                        <mat-form-field>
+                        <mat-form-field class="inbox">
                             <input matInput placeholder="携帯番号" formControlName="mobile_number">
                         </mat-form-field>
-                        <mat-form-field>
-                            <input matInput placeholder="Eメール" formControlName="mail_address">
+                        <mat-form-field class="inbox">
+                            <input matInput placeholder="Eメール" formControlName="mail_address" required>
                         </mat-form-field>
-                        <mat-form-field>
+                        <mat-form-field class="inbox">
                             <input matInput placeholder="Twitter" formControlName="twitter_link">
                         </mat-form-field>
-                        <mat-form-field>
+                        <mat-form-field class="inbox">
                             <input matInput placeholder="誕生日" formControlName="birthday">
                         </mat-form-field>
-                        <mat-form-field>
+                        <mat-form-field class="inbox">
                             <input matInput placeholder="入社日" formControlName="entering_company">
                         </mat-form-field>
-                        <mat-form-field>
+                        <mat-form-field class="inbox">
                             <input matInput placeholder="英語テスト" type="number" formControlName="english_test">
                         </mat-form-field>
-                        <mat-form-field>
-                            <!-- input matInput placeholder="事業所"  formControlName="branch_id"-->
+                        <!-- mat-form-field class="inbox">
                             <mat-label>事業所</mat-label>
-                            <mat-select>
+                            <mat-select formControlName="branch_id">
                                 <mat-option *ngFor="let branch of branches" [value]="branch.id">
                                     {{branch.branch_name}}
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field>
-                        <mat-form-field>
+                        </mat-form-field -->
+                        <mat-form-field class="inbox">
                             <!-- input matInput placeholder="部門"  formControlName="organization_id" -->
                             <mat-label>部門</mat-label>
-                            <mat-select>
+                            <mat-select formControlName="organization_id">
                                 <mat-option *ngFor="let organization of organizations" [value]="organization.id">
                                     {{organization.org_name}}
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field>
-                        <mat-form-field>
+                        </mat-form-field >
+                        <mat-form-field class="inbox">
                             <!-- input matInput placeholder="役職"  formControlName="position_id" -->
                             <mat-label>役職</mat-label>
-                            <mat-select>
+                            <mat-select formControlName="position_id">
                                 <mat-option *ngFor="let position of positions" [value]="position.id">
                                     {{position.pos_name}}
                                 </mat-option>
@@ -68,8 +61,8 @@
                         </mat-form-field>
                     </form>
                 　　 <div class="button-row">
-                        <button mat-raised-button (click)="onCancel()" class="button-m">キャンセル</button>
-                        <button mat-raised-button (click)="onSave()"  class="button-m">保存</button>
+                        <button mat-raised-button (click)="onClose()" class="button-m">閉じる</button>
+                        <button mat-raised-button (click)="onCreate()"  class="button-m">作成</button>
                     </div>       
             　　　</div>
             </ng-container>

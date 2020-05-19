@@ -7,7 +7,6 @@ import { Organization ,  OrganizationService  } from '../models/organization';
 import { Position ,  PositionService  } from '../models/position';
 import { EntityAction } from '@ngrx/data';
 import { Store, select } from '@ngrx/store';
-import { increment, decrement, reset } from '../initstate/counter.actions';
 import { InitializeService } from '../services/initialize.service' ;
 
 

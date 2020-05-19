@@ -70,7 +70,7 @@ export class EmployeeListComponent implements OnInit {
     return this.curOrganization.org_name
 }
 
-  onCancel(){
+  onClose(){
     let extra:NavigationExtras = { }
     this.navroute.navigate(['/branchselect'],extra);
   }

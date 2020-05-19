@@ -24,7 +24,7 @@ export class TransactionResultComponent implements OnInit {
   ngOnInit() {
   }
 
-  onCancel(){
+  onClose(){
     this.organizationService.getAll() ; /* reread for Transaction UPDate */
     let extra:NavigationExtras = { }
     this.navroute.navigate(['/home'],extra);

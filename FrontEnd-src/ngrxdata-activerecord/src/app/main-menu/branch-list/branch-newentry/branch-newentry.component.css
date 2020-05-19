@@ -13,6 +13,11 @@
     margin-top:20px ;
 }
 
+.inbox{
+    padding-left: 5% ;
+    width:52% ; 
+    /* padding-right: 5% ; */
+}
 
 .button-m{
     margin:20px 10px 20px 10px;

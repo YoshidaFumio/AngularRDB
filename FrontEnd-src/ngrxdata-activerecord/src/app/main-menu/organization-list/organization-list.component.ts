@@ -22,7 +22,7 @@ export class OrganizationListComponent implements OnInit {
   ngOnInit() {
   }
 
-  onCancel(){
+  onClose(){
     let extra:NavigationExtras = { }
     this.navroute.navigate(['/home'],extra);
   }

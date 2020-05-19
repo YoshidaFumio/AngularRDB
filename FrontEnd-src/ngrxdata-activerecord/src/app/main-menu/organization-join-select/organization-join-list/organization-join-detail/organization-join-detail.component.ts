@@ -89,7 +89,7 @@ export class OrganizationJoinDetailComponent implements OnInit {
     return positionItem.pos_name ;
   }
 
-  onCancel(){
+  onClose(){
     let extra:NavigationExtras = { }
     this.navroute.navigate(['/organizationjoinlist',this.return_id],extra);
   }

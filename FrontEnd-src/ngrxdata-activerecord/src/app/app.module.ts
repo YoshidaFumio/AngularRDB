@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+// import { PushPipe, LetDirective } from '@ngrx/component' ;
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,7 +18,6 @@ import { entityConfig } from './entity-metadata';
 import { defaultDataServiceConfig } from './dataservice-config';
 
 import { StoreModule } from '@ngrx/store';
-import { counterReducer } from './initstate/counter.reducer';
 import { reducers, metaReducers } from './reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
@@ -44,6 +44,7 @@ import { OrganizationJoinListComponent } from './main-menu/organization-join-sel
 import { OrganizationJoinDetailComponent } from './main-menu/organization-join-select/organization-join-list/organization-join-detail/organization-join-detail.component';
 import { TransactionTestComponent } from './main-menu/transaction-test/transaction-test.component';
 import { TransactionResultComponent } from './main-menu/transaction-test/transaction-result/transaction-result.component';
+import { httpInterceptorProviders } from './http-interceptors';
 
 
 @NgModule({
@@ -72,6 +73,8 @@ import { TransactionResultComponent } from './main-menu/transaction-test/transac
     OrganizationJoinDetailComponent,
     TransactionTestComponent,
     TransactionResultComponent,
+    // PushPipe ,    *Ngrx-component dosn't work when AOT= "true" in angular.json
+    // LetDirective ,
   ],
   imports: [
     BrowserModule,
@@ -94,11 +97,13 @@ import { TransactionResultComponent } from './main-menu/transaction-test/transac
     StoreModule.forRoot({}, {})
 
   ],
-  providers: [{ provide: DefaultDataServiceConfig,useValue: defaultDataServiceConfig}],
+  providers: [ httpInterceptorProviders , 
+    { provide: DefaultDataServiceConfig,useValue: defaultDataServiceConfig}],
+/*　entryComponents delete after Angular9.1
   entryComponents:[
     DialogComponent,
     DialogOkNgComponent
-  ],
+  ],*/
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

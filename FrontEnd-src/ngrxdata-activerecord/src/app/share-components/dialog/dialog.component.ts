@@ -15,7 +15,7 @@ import { MAT_DIALOG_DATA,MatDialogRef} from '@angular/material/dialog' ;
       public matDialogRef : MatDialogRef<DialogComponent>) { }
 
     ngOnInit() {
-      if (this.data['title'] == 'エラー'){
+      if (this.data['title'].match("エラー")){
         this.isError = true ;
       }
       else{
@@ -24,7 +24,7 @@ import { MAT_DIALOG_DATA,MatDialogRef} from '@angular/material/dialog' ;
     }
      
 
-    onClick():void {
+    onClickButton():void {
       // 
       this.matDialogRef.close();
     }  

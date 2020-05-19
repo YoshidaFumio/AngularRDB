@@ -53,7 +53,7 @@ export class TransactionTestComponent implements OnInit {
     });
   }
 
-  onCancel(){
+  onClose(){
     let extra:NavigationExtras = { }
     this.navroute.navigate(['/home'],extra);
   }

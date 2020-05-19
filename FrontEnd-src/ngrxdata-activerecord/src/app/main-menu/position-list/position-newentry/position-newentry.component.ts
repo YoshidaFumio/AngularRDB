@@ -4,7 +4,7 @@ import { ActivatedRoute ,Router, NavigationExtras} from '@angular/router' ;
 import { Position ,  PositionService  } from '../../../models/position';
 import { FormGroup, FormControl, FormBuilder , Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog' ;
-import { DialogOkNgComponent } from '../../../share-components/dialog-ok-ng/dialog-ok-ng.component';
+import { DialogService } from '../../../services/dialog.service';
 
 @Component({
   selector: 'app-position-newentry',
@@ -19,19 +19,22 @@ export class PositionNewentryComponent implements OnInit {
   positionTable : Position[] ;
   positionForm:FormGroup ;
   alertDialogResult = '';
+  errMessage: string[];
+  errCount:number ;
 
   constructor(
     private route: ActivatedRoute , //for get router paramaeter
     private navroute : Router ,
     private positionService: PositionService, 
     private fb: FormBuilder ,
-    private matdialog:MatDialog  
+    private matdialog:MatDialog ,
+    private dialogService: DialogService 
     ) {
         this.position$ = positionService.entities$ ;
-        this.createForm() ;
   }
 
   ngOnInit() {
+    this.createForm() ;
   }
   getCurrent(curorg:Position[]) {
     this.positionTable = curorg ;
@@ -42,12 +45,39 @@ export class PositionNewentryComponent implements OnInit {
     this.setupForm() ;
   }
 
-  onCancel(){
+  onClose(){
     let extra:NavigationExtras = { }
     this.navroute.navigate(['/positionlist'],extra);
   }
 
-  onSave() {
+  onCreate() {
+    this.errMessage = [] ;
+    this.errCount = 0 ;
+    if (this.positionForm.value['code']=='') {
+      this.errMessage[this.errCount]="301."+"コードが入力されていません"
+      this.errCount ++ ;
+    }
+    else {
+      let codeu = this.positionForm.value['code']
+      let mret = this.positionTable.findIndex(
+        (target) =>{
+          return (target.pos_code === codeu)
+        }
+      )
+      if (mret != -1){
+        this.errMessage[this.errCount]="302."+"コードが重複してます"
+        this.errCount ++ ;  
+      }
+    }
+    if (this.positionForm.value['name']=='') {
+      this.errMessage[this.errCount]="311."+"名前が入力されていません"
+      this.errCount ++ ;
+    }
+    if (this.errCount > 0){
+      this.dialogService.errorDisplay("入力エラー",this.errMessage)
+      return
+    }
+
     let orgdata = new Position ;
     orgdata.pos_code = this.positionForm.value['code'] ;
     orgdata.pos_name = this.positionForm.value['name'] ;
@@ -59,8 +89,8 @@ export class PositionNewentryComponent implements OnInit {
 
   createForm() {
     this.positionForm = this.fb.group ({
-      code: '' ,
-      name: '' 
+      code: ['',[Validators.required]],
+      name: ['',[Validators.required]] 
     });
   }
 

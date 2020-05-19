@@ -4,7 +4,7 @@ import { ActivatedRoute ,Router, NavigationExtras} from '@angular/router' ;
 import { Position ,  PositionService  } from '../../../models/position';
 import { FormGroup, FormControl , FormBuilder , Validators} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog' ;
-import { DialogComponent } from '../../../share-components/dialog/dialog.component';
+import { DialogService } from '../../../services/dialog.service';
 import { DialogOkNgComponent } from '../../../share-components/dialog-ok-ng/dialog-ok-ng.component';
 
 @Component({
@@ -29,7 +29,8 @@ export class PositionDetailComponent implements OnInit {
     private navroute : Router ,
     private positionService: PositionService, 
     private fb: FormBuilder ,
-    private matdialog:MatDialog  
+    private matdialog:MatDialog ,
+    private dialogService : DialogService
     ) {
         this.position$ = positionService.entities$ ;
   }
@@ -55,7 +56,7 @@ export class PositionDetailComponent implements OnInit {
     this.createForm() ;
   }
 
-  onCancel(){
+  onClose(){
     let extra:NavigationExtras = { }
     this.navroute.navigate(['/positionlist'],extra);
   }
@@ -80,7 +81,38 @@ export class PositionDetailComponent implements OnInit {
     });
   }
 
-  onSave() {
+  onUpdate() {
+        /* Check Data*/
+    this.errMessage = [] ;
+    this.errCount = 0 ;
+    if (this.positionForm.value['code']==='') {
+      this.errMessage[this.errCount]="301."+"コードが入力されていません"
+      this.errCount ++ ;
+    }
+    else {
+      let codeu = this.positionForm.value['code']
+      let mret = this.positionTable.findIndex(
+        (target) =>{
+          return (target.pos_code === codeu)
+        }
+      )
+      if ( mret != this.row) {
+        if (mret != -1){
+          this.errMessage[this.errCount]="302."+"コードが重複してます"
+          this.errCount ++ ;  
+        }
+      }
+    }
+
+    if (this.positionForm.value['name']==='') {
+      this.errMessage[this.errCount]="311."+"名前が入力されていません"
+      this.errCount ++ ;
+    }
+    if (this.errCount > 0){
+      this.dialogService.errorDisplay("入力エラー",this.errMessage)
+      return
+    }
+    
     /* if (!this.checkForm()){ return } */
     let orgdata = new Position ;
     orgdata.id = this.curPosition.id ;
@@ -97,36 +129,6 @@ export class PositionDetailComponent implements OnInit {
       code: [this.curPosition.pos_code,[Validators.required]] ,
       name: [this.curPosition.pos_name,[Validators.required]]
     });
-  }
-
-  checkForm():boolean {
-    this.errMessage = [] ;
-    this.errCount = 0 ;
-    if  (this.positionForm.value['code']='' ){
-      this.errMessage[this.errCount] = (this.errCount+1) +".コードが入力されていません。";
-      this.errCount += 1 ;
-    }
-    if  (this.positionForm.value['name']='' ){
-      this.errMessage[this.errCount] = (this.errCount+1) +".名前が入力されていません。";
-      this.errCount += 1 ;
-    }
-    // エラーダイアログの表示
-    if (this.errCount > 0) {
-      let dialog2 = this.matdialog.open(DialogComponent, {
-        'data' : {'title': 'エラー' , 'message' : this.errMessage},
-　　　　/*        'height' : '240px',*/
-        'width' : '280px',
-        'disableClose' : false
-      });
-      dialog2.afterClosed().subscribe( result => {
-        console.log("error occur")
-        return　false ;
-      })
-    }
-    else{
-      return true ;
-    }
-
   }
 
 }

@@ -7,7 +7,7 @@ import { Organization ,  OrganizationService  } from '../../../models/organizati
 import { Position ,  PositionService  } from '../../../models/position';
 import { FormGroup, FormControl,FormBuilder , Validators} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog' ;
-import { DialogComponent } from '../../../share-components/dialog/dialog.component';
+import { DialogService } from '../../../services/dialog.service';
 import { DialogOkNgComponent } from '../../../share-components/dialog-ok-ng/dialog-ok-ng.component';
 
 
@@ -44,7 +44,8 @@ export class EmployeeDetailComponent implements OnInit {
     private organizationService: OrganizationService, 
     private positionService: PositionService, 
     private fb: FormBuilder ,
-    private matdialog:MatDialog  
+    private matdialog:MatDialog ,
+    private dialogService : DialogService  
     ) {
         this.employee$ = employeeService.entities$ ;
         this.branch$ = branchService.entities$ ;
@@ -111,7 +112,7 @@ export class EmployeeDetailComponent implements OnInit {
     return positionItem.pos_name ;
   }
 
-  onCancel(){
+  onClose(){
     let extra:NavigationExtras = { }
     this.navroute.navigate(['/employeelist',this.return_id],extra);
   }
@@ -136,7 +137,27 @@ export class EmployeeDetailComponent implements OnInit {
     });
   }
 
-  onSave() {
+  onUpdate() {
+    this.errMessage = [] ;
+    this.errCount = 0 ;
+    if (this.employeeForm.value['first_name']==='') {
+      this.errMessage[this.errCount]="411."+"名前が入力されていません"
+      this.errCount ++ ;
+    }
+
+    if (this.employeeForm.value['last_name']==='') {
+      this.errMessage[this.errCount]="421."+"姓が入力されていません"
+      this.errCount ++ ;
+    }
+    if (this.employeeForm.value['mail_address']==='') {
+      this.errMessage[this.errCount]="431."+"eメールが入力されていません"
+      this.errCount ++ ;
+    }
+    if (this.errCount > 0){
+      this.dialogService.errorDisplay("入力エラー",this.errMessage)
+      return
+    }
+
     let empdata = new Employee ;
     empdata.id = this.curEmployee.id ;
     empdata.first_name = this.employeeForm.value['first_name'] ;
