@@ -18,7 +18,8 @@ ADD nginx.conf /etc/nginx/conf.d/webapp.conf
 copy srccopy/ /usr/src/
 WORKDIR /usr/src/ActiveRecordService/BackEnd
 RUN gem install bundler  && \
-    bundle install --path vendor/bundle && \
+    bundle config set path 'vendor/bundle' && \ 
+    bundle install && \
     rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/*
 
 #Environment

@@ -1,5 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+/*
+    omit @ngrx/component because
+    Ngrx-component dosn't work when aot= "true" in angular.json
+    confirm angular 9.1.4
+*/
 // import { PushPipe, LetDirective } from '@ngrx/component' ;
 
 import { AppRoutingModule } from './app-routing.module';
@@ -73,7 +78,7 @@ import { httpInterceptorProviders } from './http-interceptors';
     OrganizationJoinDetailComponent,
     TransactionTestComponent,
     TransactionResultComponent,
-    // PushPipe ,    *Ngrx-component dosn't work when AOT= "true" in angular.json
+    // PushPipe ,  
     // LetDirective ,
   ],
   imports: [
